@@ -2,11 +2,14 @@ from huggingface_hub.utils import RepositoryNotFoundError
 from huggingface_hub import HfApi, create_repo
 import os
 
-repo_id = "Fitjv/tourism-dataset"   # ✅ dataset repo name
+repo_id = "Fitjv/tourism-dataset"   # dataset repo name
 repo_type = "dataset"
 
 # Init API client with token
-api = HfApi(token=os.getenv("HF_TOKEN"))
+HF_TOKEN = os.getenv("HF_TOKEN")
+if not HF_TOKEN:
+    raise ValueError("HF_TOKEN not found in environment. Add it via Colab secrets.")
+api = HfApi(token=HF_TOKEN)
 
 try:
     api.repo_info(repo_id=repo_id, repo_type=repo_type)
@@ -17,8 +20,11 @@ except RepositoryNotFoundError:
     print(f"Dataset repo '{repo_id}' created.")
 
 # Upload local dataset folder
+BASE = "Project/tourism_project"
+LOCAL_DATA_FOLDER = os.path.join(BASE, "data")
+
 api.upload_folder(
-    folder_path="Project/tourism_project/data",
+    folder_path=LOCAL_DATA_FOLDER,
     repo_id=repo_id,
     repo_type=repo_type,
 )

@@ -11,10 +11,30 @@ DATASET_PATH = "hf://datasets/Fitjv/tourism-dataset/tourism_dataset.csv"
 tourism_df = pd.read_csv(DATASET_PATH)
 print("✅ Dataset loaded successfully.")
 
-target = 'Tourism_Category'
+target = "ProdTaken"
 
-numeric_features = ['Monthly_Income','Age','Num_Trips']
-categorical_features = ['Gender','Residence_City','Marital_Status']
+numeric_features = [
+    "Age",
+    "DurationOfPitch",
+    "NumberOfPersonVisiting",
+    "NumberOfFollowups",
+    "PreferredPropertyStar",
+    "NumberOfTrips",
+    "PitchSatisfactionScore",
+    "NumberOfChildrenVisiting",
+    "MonthlyIncome"
+]
+categorical_features = [
+    "TypeofContact",
+    "Occupation",
+    "Gender",
+    "ProductPitched",
+    "MaritalStatus",
+    "Designation",
+    "Passport",
+    "OwnCar",
+    "CityTier"
+]
 
 X = tourism_df[numeric_features + categorical_features]
 y = tourism_df[target]
